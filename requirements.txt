@@ -1,0 +1,9 @@
+virtualenv
+sgp4
+datetime
+numpy
+PyAstronomy
+scipy
+Flask
+Flask-Cors
+requests
