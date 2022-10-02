@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify, make_response
 from flask_cors import CORS
 from debris import Debris
 TEMPLATES_AUTO_RELOAD = True
@@ -15,9 +15,7 @@ endpoint = '/api/v1'
 
 @app.route(endpoint + '/', methods=['GET'])
 def home():
-    if request.method == 'GET':     # whatever you wanne do
-        s = {"value": "data"}
-        return jsonify(s), 200
+    return render_template('index.html')
     
     
 @app.route(endpoint + '/get_last_position', methods=['GET'])
@@ -47,9 +45,18 @@ def get_last_positions():
             'y':list(y),
             'z':list(z),
             }
-        return jsonify(s), 200    
+        return jsonify(s), 200
+
+@app.route(endpoint + '/metrics',methods=['GET'])
+def metrics():
+    f=open('test.txt','r')
+    data = f.read()
+    print('data =',data)
+    response = make_response(data, 200)
+    response.mimetype = "text/plain"
+    return response
     
 # Start app on http://localhost:5000/api/v1
 if __name__ == '__main__':
     #app.run(host="localhost", port=5000,debug=True)
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000,debug=True)
