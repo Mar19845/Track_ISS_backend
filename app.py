@@ -51,4 +51,5 @@ def get_last_positions():
     
 # Start app on http://localhost:5000/api/v1
 if __name__ == '__main__':
-    app.run(host="localhost", port=5000,debug=True)
+    #app.run(host="localhost", port=5000,debug=True)
+    app.run()
