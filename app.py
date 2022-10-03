@@ -13,7 +13,7 @@ CORS(app)
 
 endpoint = '/api/v1'
 
-@app.route(endpoint + '/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
     

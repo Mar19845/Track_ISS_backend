@@ -55,7 +55,7 @@
       
           useEffect(() => {
             // load satellite data
-            fetch('http://localhost:5000/api/v1/metrics').then(r => r.text()).then(rawData => {
+            fetch('http://3.14.70.57/api/v1/metrics').then(r => r.text()).then(rawData => {
               const tleData = rawData.replace(/\r/g, '')
                 .split(/\n(?=[^12])/)
                 .filter(d => d)
