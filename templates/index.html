@@ -36,9 +36,18 @@
         const { useState, useEffect, useRef, useMemo } = React;
       
         const EARTH_RADIUS_KM = 6371; // km
-        const SAT_SIZE = 150; // km
+        const SAT_SIZE = 300; // km
         const TIME_STEP = 3 * 10; // per frame
-      
+
+        // globe material
+        const globeMaterial = new THREE.MeshPhongMaterial();
+        globeMaterial.bumpScale = 10;
+        new THREE.TextureLoader().load('//unpkg.com/three-globe/example/img/earth-water.png', texture => {
+          globeMaterial.specularMap = texture;
+          globeMaterial.specular = new THREE.Color('grey');
+          globeMaterial.shininess = 15;
+        });
+
         const World = () => {
           const globeEl = useRef();
           const [satData, setSatData] = useState();
@@ -95,9 +104,10 @@
       
           const satObject = useMemo(() => {
             if (!globeRadius) return undefined;
-      
+            
+            //const satGeometry = new THREE.OctahedronGeometry(SAT_SIZE * globeRadius / EARTH_RADIUS_KM / 2, 0);
             const satGeometry = new THREE.PolyhedronGeometry( verticesOfCube, indicesOfFaces, SAT_SIZE * globeRadius / EARTH_RADIUS_KM / 2, 0 );
-            const satMaterial = new THREE.MeshLambertMaterial({ color: 'red', transparent: true, opacity: 1 });
+            const satMaterial = new THREE.MeshLambertMaterial({ color: 'grey', transparent: true, opacity: 1 });
             return new THREE.Mesh(satGeometry, satMaterial);
           }, [globeRadius]);
       
@@ -109,7 +119,10 @@
           return <div>
             <Globe
               ref={globeEl}
+              globeMaterial={globeMaterial}
               globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+              bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+              backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
               objectsData={objectsData}
               objectLabel="name"
               objectLat="lat"
